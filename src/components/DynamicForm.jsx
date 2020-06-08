@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import jsonpath from 'jsonpath';
 import { generate } from 'shortid';
 import { TextInput } from './TextInput';
-import { mapObjectTreeFromProperty } from '../object-tree-builder';
-import { mapJsonIntoFields } from '../form-metadata-generator';
+import { mapObjectTreeFromProperty } from '../data-transformation/object-tree-builder';
+import { mapJsonIntoFields } from '../data-transformation/form-metadata-generator';
 import { TextArea } from './TextArea';
 
 const mapObjectIntoFields = (fieldName, fieldSkeleton) => {

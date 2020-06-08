@@ -1,6 +1,6 @@
 import React from 'react';
 import DynamicForm from './DynamicForm';
-import { mapJsonIntoFields } from '../form-metadata-generator';
+import { mapJsonIntoFields } from '../data-transformation/form-metadata-generator';
 
 export default function App() {
   const formSkeleton = mapJsonIntoFields(require('../form-skeleton.json'));

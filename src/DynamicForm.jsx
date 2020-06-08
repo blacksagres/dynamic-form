@@ -4,6 +4,7 @@ import { generate } from 'shortid';
 import { TextInput } from './TextInput';
 import { mapObjectTreeFromProperty } from './object-tree-builder';
 import { mapJsonIntoFields } from './form-metadata-generator';
+import { TextArea } from './TextArea';
 
 const mapObjectIntoFields = (fieldName, fieldSkeleton) => {
   const splitFields = Object.keys(fieldSkeleton.value).map(key => {
@@ -47,7 +48,31 @@ const mapArrayIntoFields = (fieldName, fieldSkeleton) => {
 
 // supported types: string, number, object, array
 const getMatchingComponent = (fieldName, fieldSkeleton, index) => {
-  if (['string', 'number'].includes(fieldSkeleton.type)) {
+  if (fieldSkeleton.type === 'number') {
+    return (<TextInput
+      key={`${fieldName}-${fieldSkeleton.type}`}
+      dataField={fieldName}
+      dataIndex={index}
+      id={fieldName}
+      label={fieldName}
+      value={fieldSkeleton.value}
+      type={fieldSkeleton.type}
+    />);
+  }
+
+  if ([ 'string' ].includes(fieldSkeleton.type)) {
+
+    if(fieldSkeleton.value.length > 100) return (
+      <TextArea
+        key={`${fieldName}-${fieldSkeleton.type}`}
+        dataField={fieldName}
+        dataIndex={index}
+        id={fieldName}
+        label={fieldName}
+        value={fieldSkeleton.value}
+      />
+    )
+
     return (
       <TextInput
         key={`${fieldName}-${fieldSkeleton.type}`}
@@ -72,13 +97,13 @@ const getMatchingComponent = (fieldName, fieldSkeleton, index) => {
 
 export default props => {
   const { formData } = props;
-  const [jsonData, setJsonData] = useState(require('./form-skeleton.json'));
-  const [jsonFormStructure, setJsonFormStructure] = useState(formData);
+  const [ jsonData, setJsonData ] = useState(require('./form-skeleton.json'));
+  const [ jsonFormStructure, setJsonFormStructure ] = useState(formData);
   // wordcloud doesn't do anything here
   delete formData.wordcloud;
 
   const oneEventForAll = event => {
-    console.log('triggered')
+    console.log('triggered');
     let propertyMap = mapObjectTreeFromProperty(event.target);
     propertyMap = propertyMap.replace('.', '');
     propertyMap = propertyMap.split('.');
@@ -89,12 +114,12 @@ export default props => {
 
     const newJson = { ...jsonData };
     jsonpath.apply(newJson, propertyMap, () => {
-      return event.target.value
+      return event.target.value;
     });
 
     setJsonData(newJson);
     setJsonFormStructure(mapJsonIntoFields(newJson));
-  }
+  };
 
   useEffect(() => {
     document.querySelectorAll('.js-dynamic-field-text').forEach(textField => {
@@ -106,7 +131,7 @@ export default props => {
         textField.removeEventListener('change', oneEventForAll);
       });
     };
-  }, [jsonData, jsonFormStructure]);
+  }, [ jsonData, jsonFormStructure ]);
 
   return (
     <div className="flex flex-column w-full">

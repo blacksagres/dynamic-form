@@ -1,12 +1,14 @@
+const fieldsToValidate = [ 'name' ];
+
 export const mapJsonIntoFields = jsonToParse => {
   const resultObject = {};
-  const mustUseRecursion = ['array', 'object'];
+  const mustUseRecursion = [ 'array', 'object' ];
 
   Object.keys(jsonToParse).forEach(key => {
     const theProperty = jsonToParse[key];
 
     // anything null won't be mapped, but an empty string is allowed to become a field
-    if (!theProperty && theProperty !== "") return;
+    if (!theProperty && theProperty !== '') return;
 
     const theType = Array.isArray(theProperty)
       ? 'array'
@@ -24,12 +26,15 @@ export const mapJsonIntoFields = jsonToParse => {
     } else {
       // only the the deepest levels of the tree we must validate
       // since those will be the nodes that will become html fields
+      // console.log(key);
       resultObject[key] = {
         type: theType,
         value: theProperty,
-        validateAs: ['required']
+        validateAs: fieldsToValidate.includes(key) ? [ 'required' ] : null,
       };
     }
+
+    // console.log(resultObject);
   });
 
   return resultObject;

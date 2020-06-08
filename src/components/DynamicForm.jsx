@@ -27,7 +27,7 @@ const mapObjectIntoFields = (fieldName, fieldSkeleton) => {
 };
 
 const mapArrayIntoFields = (fieldName, fieldSkeleton) => {
-  if (!fieldSkeleton.value.length) return null;
+  // if (!fieldSkeleton.value.length) return null;
   return (
     <div
       key={`field-group-array-${generate()}`}
@@ -57,6 +57,7 @@ const getMatchingComponent = (fieldName, fieldSkeleton, index) => {
       label={fieldName}
       value={fieldSkeleton.value}
       type={fieldSkeleton.type}
+      validateAs={fieldSkeleton.validateAs}
     />);
   }
 
@@ -70,6 +71,7 @@ const getMatchingComponent = (fieldName, fieldSkeleton, index) => {
         id={fieldName}
         label={fieldName}
         value={fieldSkeleton.value}
+        validateAs={fieldSkeleton.validateAs}
       />
     )
 
@@ -82,6 +84,7 @@ const getMatchingComponent = (fieldName, fieldSkeleton, index) => {
         label={fieldName}
         value={fieldSkeleton.value}
         type={fieldSkeleton.type}
+        validateAs={fieldSkeleton.validateAs}
       />
     );
   }

@@ -14,7 +14,7 @@ const mapObjectIntoFields = (fieldName, fieldSkeleton) => {
   return (
     <div
       key={`field-group-object-${generate()}`}
-      className="m-2 p-4 rounded border-2 border-red-400"
+      className="m-2 p-4 rounded border-2 border-blue-400"
       data-field-type="object"
       data-field-name={fieldName}
     >
@@ -31,7 +31,7 @@ const mapArrayIntoFields = (fieldName, fieldSkeleton) => {
   return (
     <div
       key={`field-group-array-${generate()}`}
-      className="m-2 p-4 rounded border-2 border-purple-400"
+      className="m-2 p-4 rounded border-2 border-green-500"
       data-field-type="array"
     >
       <div
@@ -140,7 +140,7 @@ export default props => {
           getMatchingComponent(key, jsonFormStructure[key]),
         )}
       </div>
-      <div className="m-2 p-4 rounded border-2 border-blue-400 w-1/2">
+      <div className="m-2 p-4 rounded border-2 border-purple-400 w-1/2">
         <pre className="whitespace-pre-wrap">
           {JSON.stringify(jsonData, null, 2)}
         </pre>

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import shortid from 'shortid';
 
 export const TextInput = props => {
-  const { id, label, type, dataField, dataIndex, value, onChange } = props;
+  const { id, label, type, dataField, dataIndex, value, onChange, validateAs } = props;
   const [ innerValue, setInnerValue ] = useState(value);
+  const [ invalid, setValidity ] = useState(!value);
   const uId = `${id}_${shortid.generate()}`;
 
   const handleChange = event => {
@@ -16,9 +17,13 @@ export const TextInput = props => {
     }
 
     if (onChange) onChange(value);
+    setValidity(!value);
     setInnerValue(value);
   };
 
+  const validityInputClass = invalid ? 'border border-red-500' : 'border';
+
+  if (type === 'number') console.log({ type, value });
   return (
     <div className="mb-4">
       <label
@@ -28,7 +33,7 @@ export const TextInput = props => {
         {label}
       </label>
       <input
-        className="js-dynamic-field-text shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className={`js-dynamic-field-text shadow appearance-none ${validityInputClass} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
         id={uId}
         type={type}
         onChange={handleChange}
@@ -37,6 +42,7 @@ export const TextInput = props => {
         data-field-name={dataField}
         data-field-index={dataIndex}
       />
+      <p className={`text-red-500 mt-2 text-xs italic ${invalid ? '' : 'invisible'}`}>Field <span className="capitalize">{id}</span> is required.</p>
     </div>
   );
 };

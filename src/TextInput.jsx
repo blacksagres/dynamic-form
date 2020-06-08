@@ -1,15 +1,22 @@
-import React, { useState } from "react";
-import shortid from "shortid";
+import React, { useState } from 'react';
+import shortid from 'shortid';
 
 export const TextInput = props => {
   const { id, label, type, dataField, dataIndex, value, onChange } = props;
-  const [innerValue, setInnerValue] = useState(value);
+  const [ innerValue, setInnerValue ] = useState(value);
   const uId = `${id}_${shortid.generate()}`;
 
   const handleChange = event => {
-    const newValue = event.target.value;
-    if (onChange) onChange(newValue);
-    setInnerValue(newValue);
+    const { value } = event.target;
+
+    // No characters for input number
+    if (event.target.type === 'number' && (!value || isNaN(value))) {
+      event.preventDefault();
+      return;
+    }
+
+    if (onChange) onChange(value);
+    setInnerValue(value);
   };
 
   return (

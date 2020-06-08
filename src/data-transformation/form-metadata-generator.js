@@ -4,7 +4,10 @@ export const mapJsonIntoFields = jsonToParse => {
 
   Object.keys(jsonToParse).forEach(key => {
     const theProperty = jsonToParse[key];
-    if (!theProperty) return;
+
+    // anything null won't be mapped, but an empty string is allowed to become a field
+    if (!theProperty && theProperty !== "") return;
+
     const theType = Array.isArray(theProperty)
       ? 'array'
       : typeof jsonToParse[key];
@@ -19,9 +22,12 @@ export const mapJsonIntoFields = jsonToParse => {
             : recursiveResult,
       };
     } else {
+      // only the the deepest levels of the tree we must validate
+      // since those will be the nodes that will become html fields
       resultObject[key] = {
         type: theType,
         value: theProperty,
+        validateAs: ['required']
       };
     }
   });

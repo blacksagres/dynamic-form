@@ -22,7 +22,7 @@ export const TextArea = props => {
         {label}
       </label>
       <textarea
-        className="js-dynamic-field-text shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="js-dynamic-field-text shadow appearance-none border rounded h-40 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         id={uId}
         onChange={handleChange}
         value={innerValue}

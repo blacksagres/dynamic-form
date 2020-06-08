@@ -1,8 +1,8 @@
-const fieldsToValidate = [ 'name' ];
+const fieldsToValidate = [ 'game_index' ];
+const mustUseRecursion = [ 'array', 'object' ];
 
 export const mapJsonIntoFields = jsonToParse => {
   const resultObject = {};
-  const mustUseRecursion = [ 'array', 'object' ];
 
   Object.keys(jsonToParse).forEach(key => {
     const theProperty = jsonToParse[key];
@@ -26,7 +26,7 @@ export const mapJsonIntoFields = jsonToParse => {
     } else {
       // only the the deepest levels of the tree we must validate
       // since those will be the nodes that will become html fields
-      // console.log(key);
+
       resultObject[key] = {
         type: theType,
         value: theProperty,
